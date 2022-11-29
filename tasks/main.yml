@@ -1,17 +1,16 @@
 ---
-    - name: Get Raspberry information
+- name: Get Raspberry information
+  block:
+    - name: Get temperature
       block:
-        - name: Get temperature
-          block:
-            - name: "Get temperature"
-              ansible.builtin.shell: "vcgencmd measure_temp"
-              register: temp_command
-    
-            - name: "Get temperature of the output command"
-              ansible.builtin.set_fact:
-                temp: "{{ temp_command.stdout_lines | regex_search('[0-9].*.[0-9]') }}"
-    
-            - name: "Temperature value"
-              ansible.builtin.debug:
-                var: temp
-    
+        - name: "Get temperature"
+          ansible.builtin.shell: "vcgencmd measure_temp"
+          register: temp_command
+
+        - name: "Get temperature of the output command"
+          ansible.builtin.set_fact:
+            temp: "{{ temp_command.stdout_lines | regex_search('[0-9].*.[0-9]') }}"
+
+        - name: "Temperature value"
+          ansible.builtin.debug:
+            var: temp
